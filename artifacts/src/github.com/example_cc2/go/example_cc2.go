@@ -87,14 +87,17 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface) pb.Response {
 }
 
 func (t *SimpleChaincode) hello(stub shim.ChaincodeStubInterface, args []string) pb.Response {
+	var C string = args[0]
+	var a = args[1]
+	var X int
+	var err error
 
-	var a = args[0]
+	X, err = strconv.Atoi(a)
 	// must be an invoke
 	// var A, B string    // Entities
 	// var Aval, Bval int // Asset holdings
-	// var X int          // Transaction value
-	// var err error
-
+	//         // Transaction value
+	//
 	// if len(args) != 3 {
 	// 	return shim.Error("Incorrect number of arguments. Expecting 4, function followed by 2 names and 1 value")
 	// }
@@ -132,10 +135,10 @@ func (t *SimpleChaincode) hello(stub shim.ChaincodeStubInterface, args []string)
 	logger.Infof("hello %s", a)
 
 	// // Write the state back to the ledger
-	// err = stub.PutState(A, []byte(strconv.Itoa(Aval)))
-	// if err != nil {
-	// 	return shim.Error(err.Error())
-	// }
+	err = stub.PutState(C, []byte(strconv.Itoa(X)))
+	if err != nil {
+		return shim.Error(err.Error())
+	}
 
 	// err = stub.PutState(B, []byte(strconv.Itoa(Bval)))
 	// if err != nil {

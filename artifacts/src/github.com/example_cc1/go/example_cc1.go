@@ -99,9 +99,10 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface) pb.Response {
 	}
 
 	if function == "callAnotherchaincode" {
-		var a = args[0]
+		var k string=args[0]
+		var a = args[1]
 		s := string(a)
-		chainCodeArgs := util.ToChaincodeArgs("hello", s)
+		chainCodeArgs := util.ToChaincodeArgs("hello",k, s)
 		response := stub.InvokeChaincode("mycc2", chainCodeArgs, "mychannel")
 
 		if response.Status != shim.OK {
